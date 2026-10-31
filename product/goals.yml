@@ -1,0 +1,188 @@
+quarter: Q4 2024
+start_date: 2024-10-01
+end_date: 2024-12-31
+
+objectives:
+  - id: O1
+    title: Increase User Engagement
+    description: Drive more active usage and deeper feature adoption
+    owner: Product Team
+    owner_email: product@company.com
+    priority: P0
+    status: in_progress
+
+    key_results:
+      - id: KR1
+        description: Daily Active Users +20%
+        baseline: 100000
+        target: 120000
+        current: 105000
+        unit: users
+        measurement: Analytics dashboard
+        epic: TEAM-100
+        status: on_track
+
+      - id: KR2
+        description: Average Session Length +15%
+        baseline: 7.4
+        target: 8.5
+        current: 7.8
+        unit: minutes
+        measurement: Analytics dashboard
+        epic: TEAM-100
+        status: on_track
+
+      - id: KR3
+        description: Feature Adoption >50% of active users
+        baseline: 35
+        target: 50
+        current: 45
+        unit: percent
+        measurement: Feature usage analytics
+        epic: TEAM-100
+        status: at_risk
+
+  - id: O2
+    title: Improve Platform Reliability
+    description: Ensure stable, performant platform for all users
+    owner: Engineering Team
+    owner_email: engineering@company.com
+    priority: P0
+    status: in_progress
+
+    key_results:
+      - id: KR4
+        description: Achieve 99.9% uptime
+        baseline: 99.2
+        target: 99.9
+        current: 99.5
+        unit: percent
+        measurement: Infrastructure monitoring
+        epic: TEAM-103
+        status: on_track
+
+      - id: KR5
+        description: P95 API latency <100ms
+        baseline: 180
+        target: 100
+        current: 120
+        unit: milliseconds
+        measurement: APM tools
+        epic: TEAM-101
+        status: on_track
+
+  - id: O3
+    title: Expand Market Reach
+    description: Launch mobile platform to capture new user segments
+    owner: Product Team
+    owner_email: product@company.com
+    priority: P1
+    status: planned
+
+    key_results:
+      - id: KR6
+        description: Launch iOS and Android apps
+        baseline: 0
+        target: 2
+        current: 0
+        unit: apps
+        measurement: App store presence
+        epic: TEAM-102
+        status: not_started
+
+      - id: KR7
+        description: 10k mobile users in first month
+        baseline: 0
+        target: 10000
+        current: 0
+        unit: users
+        measurement: Mobile analytics
+        epic: TEAM-102
+        status: not_started
+
+milestones:
+  - id: M1
+    date: 2024-10-23
+    title: Database Upgrade Completed
+    epic: TEAM-103
+    status: completed
+    completion_date: 2024-10-23
+
+  - id: M2
+    date: 2024-11-15
+    title: User Analytics Launch
+    epic: TEAM-100
+    status: on_track
+    dependencies:
+      - TEAM-103
+
+  - id: M3
+    date: 2024-12-15
+    title: API v2 Beta Release
+    epic: TEAM-101
+    status: on_track
+    dependencies:
+      - TEAM-103
+
+  - id: M4
+    date: 2025-01-31
+    title: Mobile App Launch
+    epic: TEAM-102
+    status: on_track
+    dependencies:
+      - TEAM-101
+
+teams:
+  - id: full-stack-delivery
+    name: Full-Stack Delivery Team
+    capacity: 40  # story points per sprint
+    epics:
+      - TEAM-100
+      - TEAM-101
+
+  - id: mobile-team
+    name: Mobile Development Team
+    capacity: 30
+    epics:
+      - TEAM-102
+
+  - id: platform-team
+    name: Platform Engineering Team
+    capacity: 35
+    epics:
+      - TEAM-103
+      - TEAM-104
+
+risks:
+  - id: R1
+    description: Mobile team forming - velocity uncertain
+    impact: high
+    likelihood: medium
+    mitigation: Buffer added to mobile milestone dates
+    owner: Engineering Manager
+    related_epic: TEAM-102
+
+  - id: R2
+    description: API v2 migration may impact existing users
+    impact: high
+    likelihood: low
+    mitigation: Extensive beta testing, gradual rollout
+    owner: Product Manager
+    related_epic: TEAM-101
+
+# Outcomes configuration for diagram generation
+visualization:
+  roadmap:
+    show_completed: true
+    show_dependencies: true
+    group_by: team
+
+  outcomes:
+    highlight_at_risk: true
+    show_progress_bars: true
+    color_by_status: true
+
+  capacity:
+    show_pto: true
+    show_allocation: true
+    time_period: current_sprint

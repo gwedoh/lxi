@@ -1,0 +1,37 @@
+---
+config:
+  theme: default
+---
+graph TB
+    E100["User Analytics<br/>TEAM-100<br/>🟢 Completed"]
+    E101["API v2 Migration<br/>TEAM-101<br/>🟡 In Progress"]
+    E102["Mobile App<br/>TEAM-102<br/>⚪ Planned"]
+    E103["Database Upgrade<br/>TEAM-103<br/>🟢 Completed"]
+    E104["CI/CD Improvements<br/>TEAM-104<br/>🟡 In Progress"]
+
+    %% Dependencies
+    E103 -.->|required by| E100
+    E103 -.->|required by| E101
+    E101 -.->|required by| E102
+    E100 -.->|analytics data for| E102
+
+    %% Team ownership
+    T1[Full-Stack Team]
+    T2[Mobile Team]
+    T3[Platform Team]
+
+    T1 -.- E100
+    T1 -.- E101
+    T2 -.- E102
+    T3 -.- E103
+    T3 -.- E104
+
+    classDef completed fill:#90EE90,stroke:#006400,stroke-width:2px
+    classDef inProgress fill:#FFD700,stroke:#B8860B,stroke-width:2px
+    classDef planned fill:#E8E8E8,stroke:#A9A9A9,stroke-width:2px
+    classDef team fill:#87CEEB,stroke:#4682B4
+
+    class E100,E103 completed
+    class E101,E104 inProgress
+    class E102 planned
+    class T1,T2,T3 team

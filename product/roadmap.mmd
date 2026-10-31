@@ -1,0 +1,23 @@
+---
+config:
+  theme: default
+---
+gantt
+    title Product Roadmap - Q4 2024
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+
+    section Core Features
+    User Analytics          :done, epic100, 2024-10-15, 2024-11-15
+    API v2 Migration        :active, epic101, 2024-11-01, 2024-12-15
+    Mobile App Development  :epic102, 2024-12-01, 2025-01-31
+
+    section Infrastructure
+    Database Upgrade        :crit, done, epic103, 2024-10-01, 2024-10-23
+    CI/CD Improvements      :epic104, 2024-11-15, 2024-12-31
+
+    section Milestones
+    DB Upgrade Complete     :milestone, m1, 2024-10-23, 0d
+    Analytics Launch        :milestone, m2, 2024-11-15, 0d
+    API v2 Beta             :milestone, m3, 2024-12-15, 0d
+    Mobile App Launch       :milestone, m4, 2025-01-31, 0d

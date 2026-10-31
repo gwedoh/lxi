@@ -1,0 +1,43 @@
+---
+config:
+  theme: default
+---
+graph TB
+    subgraph O1[" Objective 1: Increase User Engagement "]
+        KR1["KR1: DAU +20%<br/>Target: 120k | Current: 105k<br/>Progress: 65% 🟢"]
+        KR2["KR2: Session Length +15%<br/>Target: 8.5min | Current: 7.8min<br/>Progress: 80% 🟢"]
+        KR3["KR3: Feature Adoption >50%<br/>Target: 50% | Current: 45%<br/>Progress: 90% 🟡"]
+    end
+
+    subgraph O2[" Objective 2: Improve Platform Reliability "]
+        KR4["KR4: 99.9% Uptime<br/>Target: 99.9% | Current: 99.5%<br/>Progress: 60% 🟡"]
+        KR5["KR5: API Latency <100ms<br/>Target: 100ms | Current: 120ms<br/>Progress: 85% 🟢"]
+    end
+
+    subgraph O3[" Objective 3: Expand Market Reach "]
+        KR6["KR6: Launch Mobile Apps<br/>Target: 2 apps | Current: 0<br/>Progress: 0% ⚪"]
+        KR7["KR7: 10k Mobile Users<br/>Target: 10k | Current: 0<br/>Progress: 0% ⚪"]
+    end
+
+    E100[Epic: User Analytics<br/>TEAM-100] -.-> KR1
+    E100 -.-> KR2
+    E100 -.-> KR3
+
+    E103[Epic: Database Upgrade<br/>TEAM-103] -.-> KR4
+    E101[Epic: API v2<br/>TEAM-101] -.-> KR5
+
+    E102[Epic: Mobile App<br/>TEAM-102] -.-> KR6
+    E102 -.-> KR7
+
+    style KR1 fill:#90EE90,stroke:#006400
+    style KR2 fill:#90EE90,stroke:#006400
+    style KR3 fill:#FFD700,stroke:#B8860B
+    style KR4 fill:#FFD700,stroke:#B8860B
+    style KR5 fill:#90EE90,stroke:#006400
+    style KR6 fill:#E8E8E8,stroke:#A9A9A9
+    style KR7 fill:#E8E8E8,stroke:#A9A9A9
+
+    style E100 fill:#87CEEB
+    style E101 fill:#87CEEB
+    style E102 fill:#87CEEB
+    style E103 fill:#87CEEB

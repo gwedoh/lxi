@@ -1,0 +1,180 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.lxi'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Mermaid CLI for diagram generation
+    // Note: Requires Node.js and @mermaid-js/mermaid-cli installed globally
+    // npm install -g @mermaid-js/mermaid-cli
+
+    // YAML parsing for document metadata
+    implementation 'org.yaml:snakeyaml:2.2'
+
+    // Markdown parsing and generation
+    implementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
+
+    // JSON processing for Jira/Confluence APIs
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.0'
+
+    // HTTP client for external API calls
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // CLI framework
+    implementation 'info.picocli:picocli:4.7.5'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.5'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+
+    // Date/Time utilities
+    implementation 'joda-time:joda-time:2.12.5'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+}
+
+application {
+    mainClass = 'com.lxi.cli.LxiCli'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// Custom tasks for LXI operations
+
+task generateDiagrams(type: Exec) {
+    description = 'Generate visual diagrams from Mermaid definitions'
+    group = 'lxi'
+
+    workingDir = projectDir
+
+    // Check if mmdc (mermaid-cli) is installed
+    doFirst {
+        try {
+            exec {
+                commandLine 'which', 'mmdc'
+            }
+        } catch (Exception e) {
+            throw new GradleException('Mermaid CLI not found. Install with: npm install -g @mermaid-js/mermaid-cli')
+        }
+    }
+
+    // Find all .mmd files and convert to SVG
+    commandLine 'bash', '-c', '''
+        find product/ -name "*.mmd" | while read file; do
+            output="${file%.mmd}.svg"
+            echo "Generating $output from $file"
+            mmdc -i "$file" -o "$output" -t neutral -b transparent
+        done
+    '''
+}
+
+task generateRoadmap(type: JavaExec) {
+    description = 'Generate product roadmap from LX documents and Jira'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.RoadmapGenerator'
+}
+
+task generateOutcomes(type: JavaExec) {
+    description = 'Generate outcomes dashboard from epic data'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.OutcomesGenerator'
+}
+
+task syncJira(type: JavaExec) {
+    description = 'Sync repository state to Jira'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.sync.JiraSync'
+}
+
+task syncConfluence(type: JavaExec) {
+    description = 'Sync LX documents to Confluence'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.sync.ConfluenceSync'
+}
+
+task syncAll {
+    description = 'Generate all diagrams and sync to external systems'
+    group = 'lxi'
+
+    dependsOn generateDiagrams, generateRoadmap, generateOutcomes, syncJira, syncConfluence
+}
+
+task validateReferences(type: JavaExec) {
+    description = 'Validate all cross-references in LXI documents'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.validation.ReferenceValidator'
+}
+
+task checkFreshness(type: JavaExec) {
+    description = 'Check for stale documents (>30 days)'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.validation.FreshnessChecker'
+}
+
+task createAdr(type: JavaExec) {
+    description = 'Create new ADR from template'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.AdrGenerator'
+    standardInput = System.in
+}
+
+task createDesignReview(type: JavaExec) {
+    description = 'Create new Design Review from template'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.DesignReviewGenerator'
+    standardInput = System.in
+}
+
+task updateLx(type: JavaExec) {
+    description = 'Update or create weekly LX document'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.LxGenerator'
+}
+
+task standupGenerate(type: JavaExec) {
+    description = 'Auto-generate daily standup from Git and Jira'
+    group = 'lxi'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.lxi.generators.StandupGenerator'
+}
+
+// Wrapper for consistent Gradle version
+wrapper {
+    gradleVersion = '8.5'
+    distributionType = Wrapper.DistributionType.ALL
+}
