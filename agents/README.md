@@ -590,9 +590,273 @@ Contains reusable skill scripts or definitions.
 
 ---
 
+## Test-Driven Development (TDD) for AI Agents
+
+### Core Principle: Tests Before Code
+
+**Rule**: When writing code, AI agents MUST write tests FIRST, then implement the code to make tests pass.
+
+**Why This is Critical**:
+- Tests define expected behavior (specification)
+- Prevents agents from creating code that "works" but doesn't meet requirements
+- Ensures changes are intentional and verified
+- Catches regressions immediately
+- Documents how code should be used
+
+### TDD Workflow for Agents
+
+```
+1. UNDERSTAND REQUIREMENT
+   ├─ Read Design Review or story description
+   ├─ Identify inputs, outputs, edge cases
+   └─ Clarify expected behavior
+
+2. WRITE FAILING TEST FIRST
+   ├─ Create test file (test_*.py, *_test.go, *.test.js, etc.)
+   ├─ Write test for expected behavior
+   ├─ Test should FAIL (code doesn't exist yet)
+   └─ Commit test: "Add test for [feature]"
+
+3. IMPLEMENT MINIMAL CODE
+   ├─ Write simplest code to make test pass
+   ├─ No extra features or complexity
+   └─ Focus on making the test green
+
+4. VERIFY TEST PASSES
+   ├─ Run test suite
+   ├─ All tests must pass
+   └─ If fail: Fix implementation, not test (unless test was wrong)
+
+5. REFACTOR
+   ├─ Improve code quality
+   ├─ Tests still pass throughout refactoring
+   └─ Commit: "Implement [feature] with tests"
+
+6. REPEAT
+   └─ Next feature, start with test
+```
+
+### Examples
+
+#### ❌ WRONG - Code without tests:
+
+```python
+# Agent writes this first (WRONG!)
+def calculate_plan_impact(original_date, new_date):
+    delta = (new_date - original_date).days
+    if delta == 0:
+        return "Expected"
+    elif delta <= 2:
+        return "Low"
+    elif delta <= 7:
+        return "Medium"
+    else:
+        return "High"
+```
+
+**Problem**: No tests, no verification, might have bugs, requirements unclear.
+
+#### ✅ CORRECT - Tests first:
+
+```python
+# STEP 1: Agent writes tests FIRST
+# test_plan_impact.py
+
+import pytest
+from datetime import datetime, timedelta
+
+def test_plan_impact_expected_when_on_schedule():
+    """When delivery is on schedule, impact should be Expected"""
+    original = datetime(2024, 11, 15)
+    actual = datetime(2024, 11, 15)
+    assert calculate_plan_impact(original, actual) == "Expected"
+
+def test_plan_impact_low_for_1_2_day_delay():
+    """1-2 day delay = Low impact"""
+    original = datetime(2024, 11, 15)
+    delayed_1_day = datetime(2024, 11, 16)
+    delayed_2_days = datetime(2024, 11, 17)
+
+    assert calculate_plan_impact(original, delayed_1_day) == "Low"
+    assert calculate_plan_impact(original, delayed_2_days) == "Low"
+
+def test_plan_impact_medium_for_3_7_day_delay():
+    """3-7 day delay = Medium impact"""
+    original = datetime(2024, 11, 15)
+    delayed_3_days = datetime(2024, 11, 18)
+    delayed_7_days = datetime(2024, 11, 22)
+
+    assert calculate_plan_impact(original, delayed_3_days) == "Medium"
+    assert calculate_plan_impact(original, delayed_7_days) == "Medium"
+
+def test_plan_impact_high_for_over_week_delay():
+    """Over 1 week delay = High impact"""
+    original = datetime(2024, 11, 15)
+    delayed_8_days = datetime(2024, 11, 23)
+    delayed_14_days = datetime(2024, 11, 29)
+
+    assert calculate_plan_impact(original, delayed_8_days) == "High"
+    assert calculate_plan_impact(original, delayed_14_days) == "High"
+
+def test_plan_impact_handles_early_delivery():
+    """Early delivery should still be Expected or Low"""
+    original = datetime(2024, 11, 15)
+    early_1_day = datetime(2024, 11, 14)
+
+    # Early is good, should be Expected
+    assert calculate_plan_impact(original, early_1_day) == "Expected"
+
+# STEP 2: Now run tests - they FAIL (function doesn't exist)
+# pytest test_plan_impact.py
+# ImportError: cannot import name 'calculate_plan_impact'
+
+# STEP 3: NOW agent implements the function to make tests pass
+# plan_impact.py
+from datetime import datetime
+
+def calculate_plan_impact(original_date: datetime, new_date: datetime) -> str:
+    """
+    Assess impact of timeline change on product roadmap.
+
+    Returns: "Expected" | "Low" | "Medium" | "High"
+    """
+    delta = (new_date - original_date).days
+
+    if delta <= 0:
+        return "Expected"  # On time or early
+    elif delta <= 2:
+        return "Low"
+    elif delta <= 7:
+        return "Medium"
+    else:
+        return "High"
+
+# STEP 4: Run tests - they PASS!
+# pytest test_plan_impact.py
+# ✅ 5 passed
+```
+
+### TDD Requirements for Different Code Types
+
+#### Backend Functions/APIs
+```
+Required tests:
+- ✅ Happy path (expected input → expected output)
+- ✅ Edge cases (empty, null, boundary values)
+- ✅ Error conditions (invalid input → proper error)
+- ✅ Integration tests (if touches database, API, etc.)
+```
+
+#### Frontend Components
+```
+Required tests:
+- ✅ Renders with expected props
+- ✅ User interactions (clicks, inputs)
+- ✅ State changes
+- ✅ Error states displayed
+```
+
+#### Scripts/CLI Tools
+```
+Required tests:
+- ✅ Command-line argument parsing
+- ✅ File I/O (if applicable)
+- ✅ Exit codes (success vs. failure)
+- ✅ Error messages
+```
+
+### Agent TDD Checklist
+
+Before committing ANY code, verify:
+
+- [ ] **Tests exist** for the new feature/fix
+- [ ] **Tests were written BEFORE** implementation
+- [ ] **Tests fail** without the implementation (verified RED)
+- [ ] **Tests pass** with the implementation (verified GREEN)
+- [ ] **Edge cases** are tested
+- [ ] **Error conditions** are tested
+- [ ] **Test names** clearly describe what is being tested
+- [ ] **Code coverage** is adequate (>80% for new code)
+
+### When Tests Should Be Skipped
+
+**NEVER skip tests except**:
+- Trivial configuration changes (updating README, comments only)
+- Documentation-only changes
+- Reverting a commit that added both code and tests
+
+**If in doubt, write a test.**
+
+---
+
+## Plan Impact Principle for AI Agents
+
+### Core Rule: Engineering Changes Trigger Business Updates
+
+**When an AI agent makes code changes that affect timelines or scope**:
+
+1. **Assess Impact**:
+   ```
+   IF implementation_time > estimated_time:
+       impact = calculate_plan_impact(estimated_date, actual_date)
+   ELSE IF scope_changed:
+       impact = "Medium" or "High"
+   ELSE:
+       impact = "Expected"
+   ```
+
+2. **If impact > Expected, MUST update**:
+   - `product/roadmap.mmd` - Adjust timeline
+   - `product/outcomes.mmd` - Update OKR progress if affected
+   - `product/epic-dependencies.mmd` - Update dependency dates
+   - Regenerate diagrams
+   - Update LX document with explanation
+   - Include in PR description
+
+3. **Agent cannot suggest PR merge until**:
+   - Diagrams reflect new reality
+   - Impact is clearly stated
+   - Stakeholder notification plan is included
+
+### Example: Agent Discovers Delay
+
+```markdown
+# Agent's PR Description (Auto-generated)
+
+## Plan Impact: Medium
+
+**Timeline Impact**: Implementation took 5 days instead of 3 days due to:
+- Unforeseen API complexity in third-party service
+- Additional error handling required for edge cases
+- Extended testing time for security validation
+
+**Updates Made**:
+✅ Updated `product/roadmap.mmd`:
+   - TEAM-123 completion: 2024-11-20 (was 2024-11-18)
+✅ Updated `process/lx/2024-11-18-weekly.md`:
+   - Epic status: 🟡 Yellow
+   - Explanation: "API integration complexity added 2 days"
+✅ Regenerated diagrams: `lxi sync all`
+
+**Stakeholder Notification Required**:
+- [ ] Tag @product-manager in this PR
+- [ ] Add to next L5 meeting agenda
+- [ ] Consider L10 escalation if affects Q4 milestone
+
+**Root Cause for Future Avoidance**:
+Third-party API documentation was incomplete. Need to:
+1. Add 20% buffer for third-party integrations
+2. Validate API behavior in spike before committing timeline
+```
+
+---
+
 ## Best Practices for AI Agents
 
 ### DO:
+✅ **Write tests BEFORE writing code** (TDD is non-negotiable)
+✅ **Assess Plan Impact** on every code change
+✅ **Update product diagrams** if impact > Expected
 ✅ Always read files before updating
 ✅ Include dates in all analysis
 ✅ Validate links after creating cross-references
@@ -600,8 +864,12 @@ Contains reusable skill scripts or definitions.
 ✅ Cascade learnings upward
 ✅ Keep external systems in sync
 ✅ Ask for clarification when ambiguous
+✅ Verify tests pass before committing
 
 ### DON'T:
+❌ **Write code without tests first**
+❌ **Merge PRs that impact timelines without updating diagrams**
+❌ **Hide delays or scope changes from stakeholders**
 ❌ Assume file contents without reading
 ❌ Create documents without dates
 ❌ Leave broken links
@@ -609,6 +877,8 @@ Contains reusable skill scripts or definitions.
 ❌ Duplicate content across documents (link instead)
 ❌ Make Jira/Confluence the source of truth
 ❌ Guess when information is unclear
+❌ Skip edge case testing
+❌ Commit code with failing tests
 
 ---
 

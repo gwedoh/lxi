@@ -227,6 +227,60 @@ public class OrderService {
 
 ---
 
+### 9. Engineering Reality Drives Business Reality
+
+**Principle**: Every engineering change that impacts timelines, scope, or deliverables MUST trigger immediate updates to product roadmaps and business planning.
+
+**The Fundamental Chain**:
+```
+Engineering Work → Product Roadmap → Business Decisions → Customer Commitments
+     Every PR          Must reflect         Based on accurate    Users rely on
+     Every delay       in diagrams         roadmap data         promises
+     Every change      Every time          Every decision       Every date
+```
+
+**Why This is Non-Negotiable**:
+- Business leaders make resource allocation decisions based on roadmaps
+- Sales teams make customer commitments based on delivery dates
+- Customers plan their roadmaps around your features
+- Hiding delays or scope changes breaks trust and causes cascade failures
+
+**How**:
+- **Every PR** must assess Plan Impact: Expected | Low | Medium | High
+- **Low/Medium/High impact** requires updating:
+  - `product/roadmap.mmd` - Adjust timeline
+  - `product/outcomes.mmd` - Update OKR progress
+  - `product/epic-dependencies.mmd` - Reflect dependency changes
+  - Regenerate all diagram images
+- **PR cannot be merged** until diagrams reflect new reality
+- **Stakeholders notified** based on impact level:
+  - Low: Note in LX doc, discuss in L5
+  - Medium: Tag PM in PR, L5 → L10 escalation
+  - High: Immediate PM notification, emergency L10
+
+**Example - Medium Impact**:
+```markdown
+# In PR #245
+**Plan Impact**: Medium - 1 week delay due to API complexity
+
+Updates made:
+✅ product/roadmap.mmd - TEAM-100 now completes 2024-11-22 (was 11-15)
+✅ product/outcomes.mmd - Q4 Goal from 100% → 95%
+✅ process/lx/2024-11-18-weekly.md - Status changed to 🟡 Yellow
+✅ PM notified via Slack
+```
+
+**Anti-pattern**:
+```markdown
+# ❌ BAD PR
+Made changes, took longer than expected, but shipping feature anyway!
+(No impact assessment, no diagram updates, PM finds out in weekly sync)
+```
+
+**This principle ensures**: Roadmaps are always accurate, business makes informed decisions, trust is maintained.
+
+---
+
 ## ADRs vs Design Reviews
 
 ### When to Create an ADR

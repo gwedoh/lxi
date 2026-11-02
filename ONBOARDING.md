@@ -20,6 +20,49 @@
 
 ---
 
+### Step 1.5: **CRITICAL** - The Engineering → Business Impact Chain (15 minutes)
+
+**⚠️ This is the most important thing you'll learn today ⚠️**
+
+```
+Your Code → Product Roadmap → Business Decisions → Customer Promises
+```
+
+**What this means for you**:
+1. **Every PR you submit** affects business timelines
+2. **Every delay or scope change** impacts customer commitments
+3. **Hiding problems** breaks trust and causes cascade failures
+4. **You are responsible** for keeping roadmaps accurate
+
+**The Non-Negotiable Rule**:
+
+Every PR must assess **Plan Impact**: `Expected | Low | Medium | High`
+
+- **Expected**: On schedule, no updates needed ✅
+- **Low/Medium/High**: MUST update product diagrams before merge 🚨
+  - Update `product/roadmap.mmd` with new timeline
+  - Update `product/outcomes.mmd` if OKRs affected
+  - Update `product/epic-dependencies.mmd` if dependencies changed
+  - Regenerate diagrams: `lxi sync all`
+  - Notify PM/stakeholders
+
+**PR cannot be approved until diagrams match reality.**
+
+**Why this is critical**:
+- PM commits delivery dates to customers based on roadmap
+- Leadership allocates budget based on timelines
+- Sales promises features based on delivery dates
+- Other teams plan dependencies based on your dates
+- **Inaccurate roadmaps = broken promises = lost trust = lost business**
+
+**Action items right now**:
+1. Read [Principle #9: Engineering Reality Drives Business Reality](./principles/README.md#9-engineering-reality-drives-business-reality)
+2. Review [.github/PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md) - Plan Impact section
+3. Look at `product/roadmap.mmd` to see how dates are tracked
+4. Understand: **Your code changes business reality. Act accordingly.**
+
+---
+
 ### Step 2: Explore Existing Decisions (30 minutes)
 
 **Where to look:**

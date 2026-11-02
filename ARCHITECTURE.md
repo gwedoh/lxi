@@ -13,10 +13,33 @@ It bridges technical implementation with product management by automating synchr
 
 ## Core Philosophy
 
+### The Fundamental Impact Chain
+
+Every engineering action has business consequences:
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  Engineering Reality → Product Roadmap → Business Decisions      │
+│                                                                   │
+│  Commit delay        → Diagram updated  → Leadership adjusts     │
+│  Scope expands       → Timeline shifts  → Customer informed      │
+│  Blocker found       → Status = Red     → Resources reallocated  │
+│                                                                   │
+│  WHY: Business users and customers make critical decisions       │
+│       based on your roadmap. Accuracy is non-negotiable.         │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+**Plan Impact Principle**: Every PR must assess business impact (Expected | Low | Medium | High). Any impact requires updating product diagrams before merge. This ensures engineering reality and business planning stay synchronized.
+
+### Core Principles
+
 1. **Work from files, not memories** - All context lives in the repository
-2. **Analysis grows stale** - Documentation must be dated and refreshed
-3. **Takeaways cascade upward** - Insights from execution feed back into planning context
-4. **Repository is truth** - The repo updates external systems, not vice versa
+2. **Engineering triggers business updates** - PR impacts update product diagrams immediately
+3. **Analysis grows stale** - Documentation must be dated and refreshed
+4. **Takeaways cascade upward** - Insights from execution feed back into planning context
+5. **Repository is truth** - The repo updates external systems, not vice versa
+6. **Test before code** - Agents and engineers write tests first to define expected behavior
 
 ## System Components
 
@@ -168,18 +191,30 @@ All work items (initiatives, epics, stories) use a traffic light system:
    └─ Decision captured, Implementation plan in Design Review
 
 3. EXECUTION
+   ├─ Tests written first (TDD - define expected behavior)
    ├─ Work begins, tracked in Progress (daily)
    ├─ Status updated: Green/Yellow/Red
    ├─ Blockers captured and escalated (L5 → L10 → L20)
    └─ Code commits, MR/PR process
 
-4. DOCUMENTATION UPDATE
+4. PLAN IMPACT ASSESSMENT (Critical Gate)
+   ├─ Every PR assesses impact: Expected | Low | Medium | High
+   ├─ If Low/Medium/High impact:
+   │  ├─ Update product/roadmap.mmd with new timeline
+   │  ├─ Update product/outcomes.mmd if OKR affected
+   │  ├─ Update product/epic-dependencies.mmd if dependencies changed
+   │  ├─ Regenerate diagram images
+   │  └─ Notify PM/stakeholders based on severity
+   ├─ Reviewer verifies diagrams updated before approval
+   └─ PR merges only when reality is reflected in product diagrams
+
+5. DOCUMENTATION UPDATE
    ├─ Progress rolls up into LX Document weekly
    ├─ Takeaways from implementation cascade back into context
    ├─ Analysis updated (with dates) to reflect learnings
    └─ LX Document syncs to Confluence, Jira epics updated
 
-5. RETROSPECTIVE
+6. RETROSPECTIVE
    ├─ Lessons learned captured in context/analysis
    ├─ Process improvements added to improvements/
    └─ Dated analysis ensures freshness

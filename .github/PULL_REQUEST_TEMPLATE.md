@@ -71,18 +71,42 @@ If this PR has **Low**, **Medium**, or **High** impact, you **MUST** update prod
 
 <!-- How was this tested? -->
 
+### Test-Driven Development (TDD) Verification
+
+**⚠️ All code changes MUST follow TDD: Tests written BEFORE implementation ⚠️**
+
+- [ ] **Tests written FIRST** (before implementation code)
+- [ ] **Tests failed initially** (verified RED - test fails without implementation)
+- [ ] **Implementation made tests pass** (verified GREEN - all tests pass)
+- [ ] **Tests cover edge cases** (empty, null, boundary values, etc.)
+- [ ] **Tests cover error conditions** (invalid input, exceptions, failures)
+
 **Test Plan**:
 - [ ] Unit tests added/updated
 - [ ] Integration tests passing
 - [ ] Manual testing completed
 - [ ] Regression testing done
+- [ ] End-to-end tests (if applicable)
 
 **Test Coverage**:
 - Before: <!-- X% -->
 - After: <!-- Y% -->
+- **Target**: >80% for new code
 
 **Test Evidence**:
+<!-- Required: Show test output proving tests pass -->
 <!-- Screenshots, test output, or links to test results -->
+```
+# Example:
+$ pytest tests/
+================================ test session starts =================================
+collected 15 items
+
+tests/test_plan_impact.py .....                                             [ 33%]
+tests/test_roadmap_update.py ..........                                     [100%]
+
+================================ 15 passed in 2.34s ==================================
+```
 
 ---
 

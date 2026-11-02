@@ -164,10 +164,26 @@ See [product/README.md](./product/README.md) for visualization details.
 
 ## 🎨 Core Philosophy
 
+### The Fundamental Flow
+
+```
+Engineering Work → Product Roadmap → Business Decisions → User Timelines
+     ↓                    ↓                  ↓                  ↓
+  Every commit      Must reflect in      Based on accurate    Customers rely
+  Every PR          product diagrams     roadmap data         on commitments
+  Every change      Every impact         Every decision       Every promise
+```
+
+**This is non-negotiable**: When engineering reality changes, product reality must change immediately. Business users and customers make critical decisions based on your roadmap. Hiding delays or scope changes breaks trust and cascades into failed commitments.
+
+### Core Principles
+
 1. **Work from files, not memories** - All context lives in the repository
-2. **Analysis grows stale** - Documentation must be dated and refreshed
-3. **Takeaways cascade upward** - Insights from execution feed back into planning context
-4. **Repository is truth** - The repo updates external systems, not vice versa
+2. **Engineering changes trigger business updates** - Every PR with impact updates product diagrams
+3. **Analysis grows stale** - Documentation must be dated and refreshed
+4. **Takeaways cascade upward** - Insights from execution feed back into planning context
+5. **Repository is truth** - The repo updates external systems, not vice versa
+6. **Test before code** - Tests define expected behavior, agents write tests first
 
 ---
 
