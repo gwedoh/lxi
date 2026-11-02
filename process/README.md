@@ -236,6 +236,11 @@ Likely needs executive decision                Add to L20 Strategic Decisions
    - Code comments → ADR decisions
    - Commit messages → Jira story
 
+4. Assess Plan Impact in PR:
+   - **Expected**: On schedule, no updates needed
+   - **Low/Medium/High**: Update product diagrams (roadmap, outcomes, dependencies)
+   - Notify PM/stakeholders if Medium/High impact
+
 **Key Documents**:
 - **Reads**: Design Reviews (for implementation), ADRs (for decisions), LX Documents (for context)
 - **Writes**: Design Reviews (technical details), ADRs (if architectural decisions), Standup updates
@@ -418,6 +423,60 @@ Likely needs executive decision                Add to L20 Strategic Decisions
 - Shared Jira Epic ✅
 - L10 Meeting Notes ✅
 - Design Reviews (if coordination needed) ✅
+
+---
+
+### Scenario 5: PR with Impact on Plan
+
+**Steps**:
+
+1. **Engineer** submits PR:
+   - Realizes work took longer than expected OR
+   - Found scope creep during implementation OR
+   - Discovered technical blocker requiring delay
+
+2. **Assess Impact** in PR template:
+   - **Low**: 1-2 day slip, no milestone impact
+   - **Medium**: 1 week slip or scope change affecting epic timeline
+   - **High**: >1 week slip, architectural change, or milestone at risk
+
+3. **If Low/Medium/High Impact**:
+   - **Update product diagrams**:
+     ```bash
+     # Update roadmap with new timeline
+     vim product/roadmap.mmd
+
+     # Update outcomes if OKR affected
+     vim product/outcomes.mmd
+
+     # Regenerate images
+     lxi sync all
+     ```
+   - **Update LX Document**:
+     - Explain impact in "This Week" or "Blockers" section
+     - Adjust epic status (Green → Yellow or Red if needed)
+
+4. **Notify Stakeholders**:
+   - **Low**: Note in LX document, discuss in next L5
+   - **Medium**: Tag PM in PR, discuss in L5, escalate to L10 if cross-team
+   - **High**: Immediate PM notification, emergency L10 discussion
+
+5. **PR Review**:
+   - Reviewer verifies diagrams updated
+   - Reviewer confirms impact assessment is accurate
+   - Approve only if diagrams reflect new reality
+
+**Why This Matters**:
+- Product diagrams are stakeholder's source of truth
+- Business makes decisions based on roadmap
+- Hiding delays or scope changes breaks trust
+- Early visibility enables proactive replanning
+
+**Documents Updated**:
+- PR with Plan Impact assessment ✅
+- Product diagrams (roadmap.mmd, outcomes.mmd) ✅
+- LX Document (impact explanation) ✅
+- Stakeholder communication ⚠️ (if Medium/High)
 
 ---
 

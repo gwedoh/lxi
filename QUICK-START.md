@@ -549,6 +549,149 @@ lxi archive lx                         # Archive old LX docs
 
 ---
 
+## ⚠️ Scenario 7: My PR has an impact on the roadmap
+
+**Time**: 15-30 min | **Persona**: Engineer
+
+### Context
+
+You're submitting a PR and realize:
+- Work took longer than estimated
+- Scope expanded during implementation
+- Found a blocker that delays the milestone
+
+### Step 1: Assess the Impact (2 min)
+
+**In your PR, use the Plan Impact section:**
+
+```markdown
+**Impact on Roadmap/Deliverables**:
+- [ ] Expected
+- [x] Medium - Notable impact requiring PM awareness
+
+**Impact Details**:
+Feature took 3 extra days due to unforeseen API complexity.
+Epic TEAM-100 completion pushed from 2024-11-15 to 2024-11-22.
+Still within sprint but affects quarterly milestone.
+```
+
+### Step 2: Update Product Diagrams (10 min)
+
+**Required for Low/Medium/High impact:**
+
+```bash
+# Update roadmap with new dates
+vim product/roadmap.mmd
+```
+
+```mermaid
+# Find your epic and update end date
+Epic User Dashboard : 2024-10-15, 2024-11-22  # Was 2024-11-15
+```
+
+```bash
+# If OKR affected, update outcomes
+vim product/outcomes.mmd
+
+# Regenerate images
+lxi sync all  # Or manually: mmdc -i product/roadmap.mmd -o product/roadmap.svg
+```
+
+### Step 3: Update LX Document (5 min)
+
+```bash
+# Update this week's LX doc
+vim process/lx/$(ls -t process/lx/*.md | head -1)
+```
+
+**Add to "This Week" or "Blockers" section:**
+
+```markdown
+### Epic: User Dashboard - TEAM-100
+
+**Status**: 🟡 Yellow
+**Progress**: 80%
+**Impact**: Medium
+
+**This Week**:
+- Completed TEAM-105 (Dashboard API integration)
+- ⚠️ API complexity added 3 days to timeline
+- New completion date: 2024-11-22 (was 2024-11-15)
+
+**Next Week**:
+- Complete final testing
+- Deploy to production
+```
+
+### Step 4: Notify Stakeholders (5 min)
+
+**Based on impact level:**
+
+**Low Impact (1-2 days)**:
+- Just note in LX document
+- Discuss in next L5 standup
+
+**Medium Impact (1 week or scope change)**:
+- Tag PM in PR: "@product-manager FYI - timeline impact"
+- Discuss in L5, may escalate to L10
+- Update in weekly sync
+
+**High Impact (>1 week or milestone at risk)**:
+- Immediate Slack/email to PM
+- Schedule emergency discussion
+- Prepare for L10 escalation
+
+**Example Slack message (Medium impact):**
+```
+🟡 Timeline Update - TEAM-100 User Dashboard
+
+Impact: 3 day delay (Medium)
+New Completion: Nov 22 (was Nov 15)
+Reason: Unforeseen API integration complexity
+
+Updated:
+✅ Roadmap diagram
+✅ This week's LX doc
+✅ PR #123 with details
+
+Still within sprint, but affects Q4 milestone by 1 week.
+Let's discuss in tomorrow's L5.
+```
+
+### Step 5: PR Review Process
+
+**Reviewer must verify:**
+
+```markdown
+PR Review Checklist:
+- [x] Plan Impact assessed (Medium)
+- [x] Product diagrams updated
+- [x] LX Document updated
+- [x] PM notified
+- [x] Impact explanation clear
+```
+
+**PR should NOT be approved until:**
+- Diagrams reflect new reality
+- Stakeholders are aware
+- LX document explains impact
+
+### Why This Matters
+
+**Without this process:**
+- ❌ Business makes decisions on outdated roadmap
+- ❌ PM learns about delays too late
+- ❌ Stakeholders lose trust
+- ❌ Cascade failures as dependencies shift
+
+**With this process:**
+- ✅ Roadmap always reflects reality
+- ✅ Early visibility enables replanning
+- ✅ Trust maintained through transparency
+- ✅ Proactive problem solving
+
+---
+
 ## 🆘 Get Help
 
 | Need | Command | Doc |
