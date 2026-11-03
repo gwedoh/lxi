@@ -31,6 +31,9 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### LXI: Keep our bin directory (has lxi CLI script) ###
+!bin/lxi
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

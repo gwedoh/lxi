@@ -1,8 +1,8 @@
 # LXI Commands
 
-Command-line interface for the LX Interface (LXI) framework.
+Command-line interface for the LX In-Sync (LXI) framework.
 
-**LXI** = **LX Interface**, where LX is derived from the L10 meeting model, X denotes multiple chained levels (L5, L10, L20), and I is this repository Interface that facilitates the process.
+**LXI** = **LX In-Sync**, where LX is derived from the L10 meeting model, In-Sync means engineering and business stay automatically synchronized, and I completes "In-Sync" - the system that keeps multiple levels (L5, L10, L20) aligned.
 
 ---
 

@@ -2,12 +2,12 @@
 
 ## Overview
 
-**LXI** (LX Interface) is a repository-centric workflow orchestration framework that makes the code repository the single source of truth for engineering teams.
+**LXI** (LX In-Sync) is a repository-centric workflow orchestration framework that keeps engineering work and business planning automatically synchronized.
 
-**LXI** = **LX Interface**, where:
+**LXI** = **LX In-Sync**, where:
 - **LX** is derived from the L10 meeting model (tiered meetings: L5, L10, L20)
-- **X** denotes multiple chained levels working together (not just one level)
-- **I** is this repository Interface that facilitates the multi-level process
+- **In-Sync** means engineering reality and business roadmaps stay automatically synchronized
+- **I** completes "In-Sync" - the system that keeps multiple levels aligned in real-time
 
 It bridges technical implementation with product management by automating synchronization between code, documentation, and project management tools (Jira, Confluence, etc.).
 
